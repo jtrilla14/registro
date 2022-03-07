@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Registro de Aspirantes</title>
+	<link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+	<link href="/favicon.ico" rel="shortcut icon">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+	<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"> </script>
+	<script src="js/validador.js"></script>
+	
+</head>
+<body>
+	<!-- Contenido -->
+    <main class="page">
+	
+		<div class="container" id="divRegistro">
+			<form id="formulario1" name="formulario1" class="form-horizontal" role="form" method="POST">
+			<h4>REGISTRO DE ASPIRANTE A LA CARRERA DE TÉCNICO SUPERIOR UNIVERSITARIO EN INHALOTERAPIA 2022</h4>
+				<div id="divErrores" name="divErrores" class="alert alert-danger" style="display:none" tabindex="10"><strong>¡ERROR!</strong> Favor de llenar los campos obligatorios</div>
+				<b>INSTRUCCIONES:</b>
+				<br>
+				<ul>
+					<li>FAVOR DE LLENAR LOS CAMPOS CON LA INFORMACIÓN QUE SE SOLICITA.</li>
+					<li>LLENAR LOS CAMPOS CON MAYUSCULAS Y SIN ACENTOS</li>
+					<li>ES MUY IMPORTANTE NO DEJAR ESPACIOS EN BLANCO</li>
+					<li>SI EXISTE ALGÚN DATO QUE NO POSEA, COLOQUE LA LEYENDA N/A</li>
+				</ul>
+				<br>
+				<div class="form-group">
+					<label for="email">Correo electrónico<font><strong>*</strong></font>:</label>
+					<input id="email" name="email" type="text" title="Requerido" class="form-control" placeholder="usuario@ejemplo.com" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+			<h4>Datos generales del aspirante:</h4><hr class="red">
+				<div class="form-group">
+					<label for="nombre">Nombre(s)<font><strong>*</strong></font>:</label>
+					<input id="nombre" name="nombre" type="text" title="Requerido" class="form-control" placeholder="" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="papellido">Apellido Paterno<font><strong>*</strong></font>:</label>
+					<input id="papellido" name="papellido" type="text" title="Requerido" class="form-control" placeholder="" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="sapellido">Apellido Materno<font><strong>*</strong></font>:</label>
+					<input id="sapellido" name="sapellido" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="genero">Género<font><strong>*</strong></font>:</label>
+					<select id="genero" name="genero" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Masculino">Masculino</option>
+						<option value="Femenino">Femenino</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group datepicker-group">
+					<label for="calendar">Fecha de nacimiento<font><strong>*</strong></font>:</label>
+					<input id="calendar" name="calendar" type="text" title="Requerido" class="form-control" placeholder="">
+					<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<script type="text/javascript">
+					$gmx(document).ready(function() {
+						 $('#calendar').datepicker({changeYear: true,
+							format:"yyyy-mm-dd"
+						 });
+					});
+				</script>
+				<div class="form-group">
+					<label for="edad">Edad<font><strong>*</strong></font>:</label>
+					<input id="edad" name="edad" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="lugnacimiento">Lugar de nacimiento<font><strong>*</strong></font>:</label>
+					<input id="lugnacimiento" name="lugnacimiento" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="nacionalidad">Nacionalidad<font><strong>*</strong></font>:</label>
+					<select id="nacionalidad" name="nacionalidad" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Mexicana">Mexicana</option>
+						<option value="Extranjero">Extranjero</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divext" class="form-group" style="display:none;">
+					<label for="paisext">País:</label>
+					<input id="paisext" name="paisext" type="text" title="" class="form-control"  placeholder="" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<script type="text/javascript">
+				$('#nacionalidad').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Extranjero'){
+					   $('#divext').css('display','block');
+					   document.getElementById('paisext').title ='Requerido';
+					 }else{
+						$('#divext').css('display','none');
+					   document.getElementById('paisext').title ='';						
+					 }});				
+				</script>
+				<div class="form-group">
+					<label for="curp">CURP<font><strong>*</strong></font>:</label>
+					<input id="curp" name="curp" type="text" title="Requerido" class="form-control"  placeholder="" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>			
+			<h4>Domicilio:</h4><hr class="red">
+				<div class="form-group">
+					<label for="calle">Calle<font><strong>*</strong></font>:</label>
+					<input id="calle" name="calle" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>			
+				<div class="form-group">
+					<label for="numero">Número<font><strong>*</strong></font>:</label>
+					<input id="numero" name="numero" type="text" title="Requerido" class="form-control" placeholder="N/A si no Aplica" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="colonia">Colonia<font><strong>*</strong></font>:</label>
+					<input id="colonia" name="colonia" type="text" title="Requerido" class="form-control" placeholder="" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="delegacion">Alcaldía<!-- o municipio--><font><strong>*</strong></font>:</label>
+					<select id="delegacion" name="delegacion" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Alvaro Obregon">Álvaro Obregón</option>
+						<option value="Azcapotzalco">Azcapotzalco</option>
+						<option value="Benito Juarez">Benito Juárez</option>
+						<option value="Coyoacan">Coyoacán</option>
+						<option value="Cuajimalpa de Morelos">Cuajimalpa de Morelos</option>
+						<option value="Cuauhtémoc">Cuauhtémoc</option>
+						<option value="Gustavo A. Madero">Gustavo A. Madero</option>
+						<option value="Iztacalco">Iztacalco</option>
+						<option value="Iztapalapa">Iztapalapa</option>
+						<option value="Magdalena Contreras">Magdalena Contreras</option>
+						<option value="Miguel Hidalgo">Miguel Hidalgo</option>
+						<option value="Milpa Alta">Milpa Alta</option>
+						<option value="Tlahuac">Tláhuac</option>
+						<option value="Tlalpan">Tlalpan</option>
+						<option value="Venustiano Carranza">Venustiano Carranza</option>
+						<option value="Xochimilco">Xochimilco</option>
+						<option value="N/A">N/A</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>					
+				<div id="divmunicipio" class="form-group" style="display:none;">
+					<label for="municipio">Municipio<font><strong>*</strong></font>:</label>
+					<input id="municipio" name="municipio" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<script type="text/javascript">
+				$('#delegacion').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'N/A'){
+					   $('#divmunicipio').css('display','block');
+					   document.getElementById('municipio').title ='Requerido';					   
+					 }else{
+						$('#divmunicipio').css('display','none'); 
+						document.getElementById('municipio').title ='';
+					 }});				
+				</script>				
+				<div class="form-group">
+					<label for="cp">Código postal<font><strong>*</strong></font>:</label>
+					<input id="cp" name="cp" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="estado">Entidad Federativa<font><strong>*</strong></font>:</label>
+					<select id="estado" name="estado" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Aguascalientes">Aguascalientes</option>
+						<option value="Baja California">Baja Californía</option>
+						<option value="Baja California Sur">Baja Californía Sur</option>
+						<option value="Campeche">Campeche</option>
+						<option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+						<option value="Colima">Colima</option>
+						<option value="Chiapas">Chiapas</option>
+						<option value="Chihuahua">Chihuahua</option>
+						<option value="Ciudad de Mexico">Ciudad de México</option>
+						<option value="Durango">Durango</option>
+						<option value="Guanajuato">Guanajuato</option>
+						<option value="Guerrero">Guerrero</option>
+						<option value="Hidalgo">Hidalgo</option>
+						<option value="Jalisco">Jalisco</option>
+						<option value="Estado de Mexico">Estado de México</option>
+						<option value="Michoacan de Ocampo">Michoacán de Ocampo</option>
+						<option value="Morelos">Morelos</option>
+						<option value="Nayarit">Nayarit</option>
+						<option value="Nuevo Leon">Nuevo León</option>
+						<option value="Oaxaca">Oaxaca</option>
+						<option value="Puebla">Puebla</option>
+						<option value="Queretaro">Querétaro</option>
+						<option value="Quintana Roo">Quintana Roo</option>
+						<option value="San Luis Potosi">San Luís Potosí</option>
+						<option value="Sinaloa">Sinaloa</option>
+						<option value="Sonora">Sonora</option>
+						<option value="Tabasco">Tabasco</option>
+						<option value="Tamaulipas">Tamaulipas</option>
+						<option value="Tlaxcala">Tlaxcala</option>
+						<option value="Veracruz">Veracruz</option>
+						<option value="Yucatan">Yucatan</option>
+						<option value="Zacatecas">Zacatecas</option>
+						<option value="N/A">N/A</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="estcivil">Estado Civil<font><strong>*</strong></font>:</label>
+					<select id="estcivil" name="estcivil" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Soltero(a)">Soltero(a)</option>
+						<option value="Casado(a)">Casado(a)</option>
+						<option value="Divorsiado(a)">Divorciado(a)</option>
+						<option value="Viudo(a)">Viudo(a)</option>
+						<option value="N/A">N/A</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="telfijo">Indique su número telefónico local (incluyendo clave LADA)<font><strong>*</strong></font>:</label>
+					<input id="telfijo" name="telfijo" type="text" title="Requerido" class="form-control" placeholder="Sin espacios" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div class="form-group">
+					<label for="telmovil">Indique su número celular<font><strong>*</strong></font>:</label>
+					<input id="telmovil" name="telmovil" type="text" title="Requerido" class="form-control" placeholder="Sin espacios" >
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="dialecto">¿Habla algún dialecto?<font><strong>*</strong></font>:</label>
+					<select id="dialecto" name="dialecto" title="Requerido" class="form-control" placeholder="">
+						<option></option>
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divdialecto" class="form-group" style="display:none;">
+					<label for="nomdialecto">¿Cuál?:</label>
+					<input id="nomdialecto" name="nomdialecto" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<script type="text/javascript">
+				$('#dialecto').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Si'){
+					   $('#divdialecto').css('display','block');
+					   document.getElementById('nomdialecto').title ='Requerido';
+					 }else{
+						$('#divdialecto').css('display','none'); 
+						document.getElementById('nomdialecto').title ='';
+					 }});				
+				</script>
+				<div class="form-group">
+					<label for="discapacidad">¿Vive con alguna discapacidad?<font><strong>*</strong></font>:</label>
+					<select id="discapacidad" name="discapacidad" title="Requerido" class="form-control" placeholder="">
+						<option></option>
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divdiscapacidad" class="form-group" style="display:none;">
+					<label for="nomdiscapacidad">¿Cuál?:</label>
+					<input id="nomdiscapacidad" name="nomdiscapacidad" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<script type="text/javascript">
+				$('#discapacidad').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Si'){
+					   $('#divdiscapacidad').css('display','block');
+					   document.getElementById('nomdiscapacidad').title ='Requerido';
+					 }else{
+						$('#divdiscapacidad').css('display','none'); 
+						document.getElementById('nomdiscapacidad').title ='';
+					 }});				
+				</script>		
+				<div class="form-group">
+					<label for="estudios">¿Grado máximo de estudios?<font><strong>*</strong></font>:</label>
+					<input id="estudios" name="estudios" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="promediobach">Indique su promedio de bachillerato en número<font><strong>*</strong></font>:</label>
+					<input id="promediobach" name="promediobach" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="bachillerato">Indique el nombre de la institución donde realizó estudios de bachillerato<font><strong>*</strong></font>:</label>
+					<input id="bachillerato" name="bachillerato" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="tipobach">¿Su bachillerato fue?<font><strong>*</strong></font>:</label>
+					<select id="tipobach" name="tipobach" title="Requerido" class="form-control">
+						<option></option>
+						<option value="General">General</option>
+						<option value="Técnico">Técnico</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divcarrera" class="form-group" style="display:none;">
+					<label for="nomcarrera">Indique el nombre de la carrera técnica que curso<font><strong>*</strong></font>:</label>
+					<input id="nomcarrera" name="nomcarrera" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<script type="text/javascript">
+				$('#tipobach').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Técnico'){
+					   $('#divcarrera').css('display','block');
+					   document.getElementById('nomcarrera').title ='Requerido';
+					 }else{
+						$('#divcarrera').css('display','none'); 
+						document.getElementById('icarrera').title ='';
+					 }});				
+				</script>								
+				<div class="form-group">
+					<label for="areabach">¿En que área realizó su bachillerato?<font><strong>*</strong></font>:</label>
+					<select id="areabach" name="areabach" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Área 1 Físico Matemático">Área 1: Físico Matemático</option>
+						<option value="Área 2 Ciencias biológicas">Área 2: Ciencias biológicas</option>
+						<option value="Área 3 Administrativas">Área 3: Administrativas</option>
+						<option value="Área 4 Socio Humanísticas">Área 4: Socio Humanísticas</option>
+						<option value="N/A">N/A</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="periodobach">Período en que realizó sus estudios de bachillerato<font><strong>*</strong></font>:</label>
+					<input id="periodobach" name="periodobach" type="text" title="Requerido" class="form-control" placeholder="2000-2003">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="atrabajo">¿Trabaja actualmente?<font><strong>*</strong></font>:</label>
+					<select id="atrabajo" name="atrabajo" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div id="divdetalles" class="form-group" style="display:none;">
+					<label for="detalles">Indique el lugar donde labora y su horario<font><strong>*</strong></font>:</label>
+					<input id="detalles" name="detalles" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<script type="text/javascript">
+				$('#atrabajo').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Si'){
+					   $('#divdetalles').css('display','block');
+					   document.getElementById('datelles').title ='Requerido';				
+					 }else{
+						$('#divdetalles').css('display','none'); 
+						document.getElementById('detalles').title ='';
+					 }});				
+				</script>
+				<div class="form-group">
+					<label for="divulgacion">¿Cómo se enteró de la carrera?<font><strong>*</strong></font>:</label>
+					<input id="divulgacion" name="divulgacion" type="text" title="Requerido" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="descripcion">Exprese en que consiste la carrera<font><strong>*</strong></font>:</label>
+					<textarea id="descripcion" name="descripcion" title="Requerido" class="form-control" rows="3" placeholder="Máximo 300 caracteres"></textarea>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				
+				<div class="form-group">
+					<label for="justificacion">¿Por qué le atrae cursar la carrera de técnico superior universitario en inhaloterapia?<font><strong>*</strong></font>:</label>
+					<textarea id="justificacion" name="justificacion" title="Requerido" class="form-control" rows="3" placeholder="Máximo 300 caracteres"></textarea>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div class="form-group">
+					<label for="antecedentes">¿Ha realizado proceso de selección en el INER previamente? <font><strong>*</strong></font>:</label>
+					<select id="antecedentes" name="antecedentes" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divacarrera" class="form-group" style="display:none;">
+					<label for="acarrera">Indique que carrera<font><strong>*</strong></font>:</label>
+					<input id="acarrera" name="acarrera" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>				
+				<div id="divaintento" class="form-group" style="display:none;">
+					<label for="aintento">¿En que año?<font><strong>*</strong></font>:</label>
+					<input id="aintento" name="aintento" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>			
+				<script type="text/javascript">
+				$('#antecedentes').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Si'){
+					   $('#divacarrera').css('display','block');
+					   $('#divaintento').css('display','block');
+					    document.getElementById('acarrera').title ='Requerido';
+						document.getElementById('aintento').title ='Requerido';				
+					 }else{
+					   $('#divacarrera').css('display','none');
+					   $('#divaintento').css('display','none'); 
+						document.getElementById('acarrera').title ='';
+						document.getElementById('aintento').title ='';
+					 }});				
+				</script>				
+				<div class="form-group">
+					<label for="postulacion">¿Ha presentado examen de admisión en alguna universidad?<font><strong>*</strong></font>:</label>
+					<select id="postulacion" name="postulacion" title="Requerido" class="form-control">
+						<option></option>
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</select>
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<div id="divicarrera" class="form-group" style="display:none;">
+					<label for="icarrera">Indique cual<font><strong>*</strong></font>:</label>
+					<input id="icarrera" name="icarrera" type="text" title="" class="form-control" placeholder="">
+					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>			
+				<script type="text/javascript">
+				$('#postulacion').change(function(){
+					let valorCambiado =$(this).val();
+					if(valorCambiado == 'Si'){
+					   $('#divicarrera').css('display','block');
+					   document.getElementById('icarrera').title ='Requerido';
+					 }else{
+						$('#divicarrera').css('display','none');
+						document.getElementById('icarrera').title ='';						
+					 }});				
+				</script>
+				<div class="form-group">				
+				<p class="text-justify">Bajo protesta de decir verdad. Confirmo que los datos proporcionados en este formulario son verídicos. Asimismo,
+				quedo enterado y autorizo que estos datos se utilizarán con fines académicos de la escuela de formación técnica del INER.<font><strong>*</strong></font></p>
+					<div class="radio">
+						<label><input id="confirmacions" name="confirmacion" type="radio" value="Acepto" title="Requerido">Acepto</label><br>
+						<label><input id="confirmacionn" name="confirmacion" type="radio" value="No Acepto" title="Requerido">No Acepto</label>
+					</div>
+					<small id="requcomfir" class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
+				</div>
+				<br>			
+			    <div class="gobmx-callout gobmx-callout-warning bottom-buffer alert alert-info">
+			<h4>AVISO DE PRIVACIDAD:</h4>
+						<p class="text-justify">En la Dirección de Enseñanza del Instituto Nacional de Enfermedades Respiratorias Ismael Cosío Villegas ubicado en Calzada de Tlalpan 4502,
+						Col, Sección XVI, Delegación Tlalpan, somos responsables del uso y protección de los datos personales que usted nos proporciona, para su tranquilidad
+						le informamos lo siguiente:</p>
+						<p class="text-justify">Los datos personales que de usted obtenemos, tendrán por finalidad la satisfacción del proceso de selección, reclutamiento
+						y en su caso ingreso institucional y podrán ser transmitidos de manera interna a la Dirección General de la Institución, Dirección de Investigación, 
+						Dirección de Enseñanza, Dirección Médica, Dirección de Administración, Órgano Interno de Control, además de otras transmisiones previstas en la Ley. 
+						Usted podrá ejercer los derechos de  acceso, rectificación, cancelación y oposición en la Unidad de Transparencia del INER, ubicada en Calzada de Tlalpan
+						4502, Col. Sección XVI, Delegación Tlalpan.</p>
+						<p class="text-justify">Para conocer mayor información sobre los términos y condiciones en que serán tratados sus datos personales
+						puede consultar el aviso de privacidad integral en la página web de este Instituto, www.iner.gob.mx o bien directamente en la Unidad de Transparencia del 
+						INER.</p>
+						<p class="text-justify">Lo anterior con fundamento en los artículos 3, 27 y 28 de la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados.</p>
+				</div>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primery pull-right"
+					onclick="validaFormularioDatos('divRegistro');">Enviar</button>
+				</div>
+			</form>		
+		</div>
+    </main>
+</body>
+</html>

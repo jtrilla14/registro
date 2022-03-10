@@ -13,6 +13,12 @@
 	<script src="https://www.google.com/recaptcha/api.js" async="true" defer="true"> </script>
 	<script src="js/validador.js"></script>
 	
+	
+	
+	
+	
+	
+	
 </head>
 <body>
 	<!-- Contenido -->
@@ -22,20 +28,59 @@
 			<form id="formulario1" name="formulario1" class="form-horizontal" role="form" method="POST">
 			<h4>REGISTRO DE ASPIRANTE A LA CARRERA DE TÉCNICO SUPERIOR UNIVERSITARIO EN INHALOTERAPIA 2022</h4>
 				<div id="divErrores" name="divErrores" class="alert alert-danger" style="display:none" tabindex="10"><strong>¡ERROR!</strong> Favor de llenar los campos obligatorios</div>
-				<b>INSTRUCCIONES:</b>
-				<br>
-				<ul>
-					<li>FAVOR DE LLENAR LOS CAMPOS CON LA INFORMACIÓN QUE SE SOLICITA.</li>
-					<li>LLENAR LOS CAMPOS CON MAYUSCULAS Y SIN ACENTOS</li>
-					<li>ES MUY IMPORTANTE NO DEJAR ESPACIOS EN BLANCO</li>
-					<li>SI EXISTE ALGÚN DATO QUE NO POSEA, COLOQUE LA LEYENDA N/A</li>
-				</ul>
+				
 				<br>
 				<div class="form-group">
 					<label for="email">Correo electrónico<font><strong>*</strong></font>:</label>
-					<input id="email" name="email" type="text" title="Requerido" class="form-control" placeholder="usuario@ejemplo.com" >
+					<input id="email" name="email" type="text" title="Requerido" class="form-control" oninput ="validarInput(this)" placeholder="usuario@ejemplo.com" >
+					<pre id="resultado"></pre>
 					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
 				</div>
+				
+				
+				
+				<script type="text/javascript">
+ 
+  function ValidaEmail(email) {
+    if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+$/.test(email)){
+	        return (true)
+			}else{
+			return (false);
+			}
+			
+	}
+
+	function validarInput(input) {
+    let email = input.value.toUpperCase(),
+        resultado = document.getElementById("resultado");
+		valido = "Email No válido";
+		
+	if (ValidaEmail(email)) { //  Acá se comprueba
+    	valido = "Email Válido";
+        resultado.classList.add("ok");
+    } else {
+    	resultado.classList.remove("ok");
+    }
+        
+    resultado.innerText = "" + valido ;
+}
+    
+  </script>
+		<style>
+			#resultado {
+			background-color: red;
+			color: white;
+			font-weight: bold;
+			}
+			#resultado.ok {
+			background-color: green;
+			}
+		</style>
+  
+
+				
+			
+				
 			<h4>Datos generales del aspirante:</h4><hr class="red">
 				<div class="form-group">
 					<label for="nombre">Nombre(s)<font><strong>*</strong></font>:</label>
@@ -111,9 +156,76 @@
 				</script>
 				<div class="form-group">
 					<label for="curp">CURP<font><strong>*</strong></font>:</label>
-					<input id="curp" name="curp" type="text" title="Requerido" class="form-control"  placeholder="" >
+					<input id="curp-input" name="curp" type="text" title="Requerido" oninput ="validarInputCURP(this)"class="form-control"  placeholder="" >
 					<small class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
-				</div>			
+				
+				<pre id="resultadoCURP"></pre>
+	</div> 
+	<script type="text/javascript">
+ 
+  function curpValida(curp) {
+    var re = /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/,
+        validado = curp.match(re);
+	
+    if (!validado)  //Coincide con el formato general?
+    	return false;
+    
+    //Validar que coincida el dígito verificador
+    function digitoVerificador(curp17) {
+        //Fuente https://consultas.curp.gob.mx/CurpSP/
+        var diccionario  = "0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+            lngSuma      = 0.0,
+            lngDigito    = 0.0;
+        for(var i=0; i<17; i++)
+            lngSuma = lngSuma + diccionario.indexOf(curp17.charAt(i)) * (18 - i);
+        lngDigito = 10 - lngSuma % 10;
+        if (lngDigito == 10) return 0;
+        return lngDigito;
+    }
+  
+    if (validado[2] != digitoVerificador(validado[1])) 
+    	return false;
+        
+    return true; //Validado
+}
+
+	function validarInputCURP(input) {
+    var curp = input.value.toUpperCase(),
+        resultadoCURP = document.getElementById("resultadoCURP");
+		valido = "CURP No válida";
+		
+	if (curpValida(curp)) { //  Acá se comprueba
+    	valido = "CURP Válida";
+        resultadoCURP.classList.add("ok");
+    } else {
+    	resultadoCURP.classList.remove("ok");
+    }
+        
+    resultadoCURP.innerText = "" + valido ;
+}
+    
+  </script>
+		<style>
+			#resultadoCURP {
+			background-color: red;
+			color: white;
+			font-weight: bold;
+			}
+			#resultadoCURP.ok {
+			background-color: green;
+			}
+		</style>
+
+
+
+
+
+
+
+
+
+
+				
 			<h4>Domicilio:</h4><hr class="red">
 				<div class="form-group">
 					<label for="calle">Calle<font><strong>*</strong></font>:</label>
@@ -453,9 +565,6 @@
 					</div>
 					<small id="requcomfir" class="form-text form-text-error" style="display:none;">Este campo es obligatorio</small>
 				</div>
-				<div class="pull-right">
-					
-				</div><p><p>
 				<br>			
 			    <div class="gobmx-callout gobmx-callout-warning bottom-buffer alert alert-info">
 			<h4>AVISO DE PRIVACIDAD:</h4>
@@ -472,9 +581,11 @@
 						INER.</p>
 						<p class="text-justify">Lo anterior con fundamento en los artículos 3, 27 y 28 de la Ley General de Protección de Datos Personales en Posesión de Sujetos Obligados.</p>
 				</div>
-				
-			</form>		<button type="button" class="btn btn-primery pull-right"
-					onclick="validaFormularioDatos('divRegistro');">Enviar</button>
+				<div class="pull-right">
+					<button type="button" class="btn btn-primery pull-right"
+					onclick="validaFormularioDatos('divRegistro');"><b>Enviar</b></button>
+				</div>
+			</form>		
 		</div>
     </main>
 </body>
